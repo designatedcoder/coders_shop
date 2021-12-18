@@ -6,7 +6,7 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <Link :href="route('welcome')">
+                        <Link :href="route('welcome')" class="font-logo block w-auto hover:text-yellow-500 transition">
                             Coder's Shop
                         </Link>
                     </div>
