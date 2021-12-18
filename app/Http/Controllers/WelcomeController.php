@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +15,9 @@ class WelcomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $categories = Category::take(4)->inRandomOrder()->get(['name', 'slug']);
         return Inertia::render('Welcome', [
+            'categories' => $categories,
             'products' => Product::all(),
         ]);
     }
