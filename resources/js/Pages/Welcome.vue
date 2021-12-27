@@ -5,7 +5,7 @@
             <div class="flex flex-col justify-around items-center absolute inset-0">
                 <span class="text-white text-xl">Lorem ipsum dolor sit amet.</span>
                 <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <gray-button as="href" href="#" class="text-md" v-for="(category, index) in categories" :key="index">
+                    <gray-button as="href" :href="route('shop.index', { category: category.slug })" class="text-md" v-for="(category, index) in categories" :key="index">
                         {{ category.name }}
                     </gray-button>
                 </div>
@@ -15,37 +15,13 @@
             <p>Lorem ipsum dolor sit amet.</p>
         </div>
         <div class="flex flex-col max-w-7xl mx-auto px-4 sm:container sm:flex-row sm:space-x-4 sm:my-4 sm:px-6 lg:px-8">
-            <Link href="#" class="flex flex-col w-full h-full mb-4" >
+            <Link href="#" class="flex flex-col w-full h-full mb-4" v-for="(feat, index) in featured" :key="index">
                 <div class="text-center text-white bg-gray-700 py-2">
                     <span>
-                        dkfoifkj
+                        {{ feat.name }}
                     </span>
                 </div>
-                <img :src="'/storage/images/defaults/no_image.jpg'" alt="#" class="h-72 object-cover md:w-72 lg:w-96">
-            </Link>
-            <Link href="#" class="flex flex-col w-full h-full mb-4" >
-                <div class="text-center text-white bg-gray-700 py-2">
-                    <span>
-                        dkfoifkj
-                    </span>
-                </div>
-                <img :src="'/storage/images/defaults/no_image.jpg'" alt="#" class="h-72 object-cover md:w-72 lg:w-96">
-            </Link>
-            <Link href="#" class="flex flex-col w-full h-full mb-4" >
-                <div class="text-center text-white bg-gray-700 py-2">
-                    <span>
-                        dkfoifkj
-                    </span>
-                </div>
-                <img :src="'/storage/images/defaults/no_image.jpg'" alt="#" class="h-72 object-cover md:w-72 lg:w-96">
-            </Link>
-            <Link href="#" class="flex flex-col w-full h-full mb-4" >
-                <div class="text-center text-white bg-gray-700 py-2">
-                    <span>
-                        dkfoifkj
-                    </span>
-                </div>
-                <img :src="'/storage/images/defaults/no_image.jpg'" alt="#" class="h-72 object-cover md:w-72 lg:w-96">
+                <img :src="'/storage/images/'+feat.image" :alt="feat.name" class="h-72 object-cover md:w-72 lg:w-96">
             </Link>
         </div>
         <div class="text-center text-white bg-black px-4 py-4">
@@ -55,7 +31,6 @@
                 Esse eligendi amet quo error, nostrum necessitatibus laudantium nulla rem quidem accusantium tenetur, aperiam qui excepturi! Natus, praesentium repellat esse optio fugiat id vel voluptatum deserunt minus, provident cum doloribus.
             </p>
         </div>
-
     </app-layout>
 </template>
 
@@ -65,7 +40,7 @@
     import AppLayout from '@/Layouts/AppLayout'
     import GrayButton from '@/Components/Buttons/GrayButton'
     export default defineComponent({
-        props: ['products', 'categories'],
+        props: ['featured', 'categories'],
         components: {
             Link,
             AppLayout,

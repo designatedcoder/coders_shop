@@ -16,9 +16,10 @@ class WelcomeController extends Controller
      */
     public function index() {
         $categories = Category::take(4)->inRandomOrder()->get(['name', 'slug']);
+        $featured = Product::where('image', '!=', 'defaults/no_image.jpg')->take(4)->inRandomOrder()->get(['name', 'slug', 'image']);
         return Inertia::render('Welcome', [
             'categories' => $categories,
-            'products' => Product::all(),
+            'featured' => $featured,
         ]);
     }
 
