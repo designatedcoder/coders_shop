@@ -10,7 +10,17 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => require(`./Pages/${name}.vue`),
     setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+        const VueApp = createApp({ render: () => h(app, props) })
+        VueApp.config.globalProperties.$filters = {
+            formatCurrency(value) {
+                value = (value/100)
+                return value.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                })
+            }
+        }
+        VueApp
             .use(plugin)
             .mixin({ methods: { route } })
             .component('icon', Icons)
