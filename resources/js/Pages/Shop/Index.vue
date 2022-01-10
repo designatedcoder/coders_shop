@@ -5,6 +5,9 @@
                 <icon name="angle-right" class="w-4 h-4 fill-current"></icon>
                 <span>Shop {{ categoryName }}</span>
             </template>
+            <template #search>
+                search
+            </template>
         </secondary-header>
         <div class="flex">
             <div class="border-r w-1/5">
@@ -21,7 +24,7 @@
             </div>
             <div class="border-l w-4/5">
                 <div class="container flex flex-wrap mx-auto">
-                    <Link href="#" class="flex flex-col w-full p-4 rounded sm:w-1/2 md:w-1/3" v-for="(product, index) in products" :key="index">
+                    <Link :href="route('shop.show', product.slug)" class="flex flex-col w-full p-4 rounded sm:w-1/2 md:w-1/3" v-for="(product, index) in products" :key="index">
                         <img :src="'/storage/images/'+product.image" :alt="product.name" class="h-72 object-cover md:w-72 lg:w-96">
                         <div class="flex justify-around bg-gray-700 py-2">
                             <span class="text-yellow-500">{{ $filters.formatCurrency(product.price) }}</span>
