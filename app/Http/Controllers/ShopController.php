@@ -59,9 +59,10 @@ class ShopController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
-    {
-        //
+    public function show(Product $product) {
+        return Inertia::render('Shop/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**

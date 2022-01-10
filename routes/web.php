@@ -22,6 +22,7 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
  *  SHOP
  */
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
