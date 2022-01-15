@@ -17,18 +17,34 @@ class ShopController extends Controller
     public function index() {
         $categories = Category::all();
         if (request()->category) {
-            $products = Product::whereHas('categories', function($query) {
-                $query->where('slug', request()->category);
-            })->inRandomOrder()->get();
-            $categoryName = $categories->where('slug', request()->category)->first()->name;
+            if (!request()->sort) {
+                $products = Product::whereHas('categories', function($query) {
+                    $query->where('slug', request()->category);
+                })->inRandomOrder()->get(['name', 'slug', 'price', 'image']);
+                $categoryName = optional($categories->where('slug', request()->category)->first())->name;
+                $categorySlug = $categories->where('slug', request()->category)->first()->slug;
+            } else {
+                $products = Product::whereHas('categories', function($query) {
+                    $query->where('slug', request()->category);
+                });
+                $categoryName = optional($categories->where('slug', request()->category)->first())->name;
+                $categorySlug = $categories->where('slug', request()->category)->first()->slug;
+                if (request()->sort == 'low_high') {
+                    $products = $products->orderBy('price')->get(['name', 'slug', 'price', 'image']);
+                } else {
+                    $products = $products->orderBy('price', 'desc')->get(['name', 'slug', 'price', 'image']);
+                }
+            }
         } else {
-            $products = Product::inRandomOrder()->get();
+            $products = Product::inRandomOrder()->get(['name', 'slug', 'price', 'image']);
             $categoryName = 'All';
+            $categorySlug = NULL;
         }
         return Inertia::render('Shop/Index', [
             'products' => $products,
             'categories' => $categories,
             'categoryName' => $categoryName,
+            'categorySlug' => $categorySlug,
         ]);
     }
 
