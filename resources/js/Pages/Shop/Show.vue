@@ -66,15 +66,36 @@
                     </div>
 
                     <div class="mt-4">
-                        <div class="flex items-center">
-                            <label for="quantity" class="flex-1 text-xl capitalize">Qty:</label>
-                            <select class="flex-1 w-full border bg-white rounded px-3 py-1 outline-none" tabindex="1" v-model="form.quantity">
-                                <option :value="qty" :selected="qty === quantity" v-for="(qty, index) in product.quantity" :key="index">{{ qty }}</option>
-                            </select>
-                        </div>
+                        <template v-if="product.quantity <= 0">
+                            <div class="mt-4">
+                                <span class="text-2xl text-red-600 font-semibold italic uppercase">
+                                    Sold Out
+                                </span>
+                            </div>
+                        </template>
+                        <template v-else-if="product.quantity <= 5">
+                            <div class="mt-4">
+                                <span class="text-2xl text-yellow-600 font-semibold italic uppercase">
+                                    Only a few left
+                                </span>
+                            </div>
+                            <div class="flex items-center">
+                                <label for="quantity" class="flex-1 text-xl capitalize">Qty:</label>
+                                <select class="flex-1 w-full border bg-white rounded px-3 py-1 outline-none" tabindex="1" v-model="form.quantity">
+                                    <option :value="qty" :selected="qty === quantity" v-for="(qty, index) in product.quantity" :key="index">{{ qty }}</option>
+                                </select>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="flex items-center">
+                                <label for="quantity" class="flex-1 text-xl capitalize">Qty:</label>
+                                <select class="flex-1 w-full border bg-white rounded px-3 py-1 outline-none" tabindex="1" v-model="form.quantity">
+                                    <option :value="qty" :selected="qty === quantity" v-for="(qty, index) in product.quantity" :key="index">{{ qty }}</option>
+                                </select>
+                            </div>
+                        </template>
                     </div>
-
-                    <div class="text-center mt-4">
+                    <div class="text-center mt-4" v-if="product.quantity > 0">
                         <gray-button as="submit" class="text-sm">
                             <span>Add to Cart</span>
                         </gray-button>
