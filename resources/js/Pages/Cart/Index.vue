@@ -19,15 +19,15 @@
                     </div>
                 </div>
                 <div>
-                    <div class="flex justify-between border-b border-black py-2">
+                    <div class="flex justify-between border-b border-black py-2" v-for="(item, index) in cartItems" :key="index">
                         <div class="flex space-x-4 w-1/2">
-                            <Link href="#">
-                                <img :src="'/storage/images/site_images/hand_craft.jpg'" alt="" class="object-cover">
+                            <Link :href="route('shop.show', item.options.slug)" class="flex flex-1">
+                                <img :src="'/storage/images/'+item.options.image" :alt="item.name" class="object-cover">
                             </Link>
                             <div class="flex flex-1 flex-col justify-between">
-                                <Link href="#" class="flex flex-col">
-                                    <span>aoisejfoesj</span>
-                                    <span>aoiejfjsjjjjjjjjjjjjj</span>
+                                <Link :href="route('shop.show', item.options.slug)" class="flex flex-col">
+                                    <span>{{ item.name }}</span>
+                                    <span>{{ item.options.details }}</span>
                                 </Link>
                                 <div class="flex flex-col mt-4">
                                     <form>
@@ -117,6 +117,7 @@
     import AppLayout from '@/Layouts/AppLayout'
     import OrderTotals from '@/Components/OrderTotals'
     export default defineComponent({
+        props: ['cartItems'],
         components: {
             Link,
             AppLayout,

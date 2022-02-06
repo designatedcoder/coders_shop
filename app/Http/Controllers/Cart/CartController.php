@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Cart;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -14,7 +15,9 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Inertia::render('Cart/Index');
+        return Inertia::render('Cart/Index', [
+            'cartItems' => Cart::instance('default')->content(),
+        ]);
     }
 
     /**
@@ -33,9 +36,9 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        Cart::instance('default')->add($request->id, $request->name, $request->quantity, $request->price, 0, ['totalQty' => $request->totalQty, 'product_code' => $request->product_code, 'image' => $request->image, 'slug' => $request->slug, 'details' => $request->details])->associate('App\Models\Product');
+        return redirect()->route('cart.index');
     }
 
     /**

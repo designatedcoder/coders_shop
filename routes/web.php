@@ -29,6 +29,7 @@ Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.
  *  CART
  */
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
