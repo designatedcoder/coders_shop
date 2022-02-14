@@ -5,7 +5,7 @@
                 <span class="text-white">
                     Order Total(before tax & discount(s))
                 </span>
-                <span class="text-yellow-500">$4.00</span>
+                <span class="text-yellow-500">{{ $filters.formatCurrency(subtotal) }}</span>
             </div>
             <div>
                 <yellow-button href="#" as="href" class="text-sm">Secure Checkout</yellow-button>
@@ -15,8 +15,8 @@
             <div>
                 <span class="px-4">Order Summary</span>
                 <div class="flex justify-between bg-white px-4 py-2 mt-4">
-                    <span>Item(s) subtotal(5)</span>
-                    <span>$14.99</span>
+                    <span>Item(s) subtotal({{ $page.props.cartCount }})</span>
+                    <span>{{ $filters.formatCurrency(subtotal) }}</span>
                 </div>
                 <div class="flex justify-between px-4 mt-4">
                     <span>Shipping</span>
@@ -31,15 +31,15 @@
                 </div>
                 <div class="flex justify-between px-4 mt-4">
                     <span>Estimated Tax</span>
-                    <span>8.48%</span>
+                    <span>{{ $filters.formatCurrency(tax) }}%</span>
                 </div>
                 <div class="bg-white px-4 py-2 mt-4">
                     <div class="flex justify-between">
                         <span>Order Total</span>
-                        <span>$4.99</span>
+                        <span>{{ $filters.formatCurrency(total) }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span>(8.48% tax rate)</span>
+                        <span>({{ taxRate }}% tax rate)</span>
                         <span>Lorem ipsum elit.</span>
                     </div>
                 </div>
@@ -59,6 +59,7 @@
     import { Link } from '@inertiajs/inertia-vue3';
     import YellowButton from '@/Components/Buttons/YellowButton'
     export default defineComponent({
+        props: ['taxRate', 'subtotal', 'tax', 'total'],
         components: {
             Link,
             YellowButton,

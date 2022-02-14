@@ -3,11 +3,11 @@
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-4 sm:px-6 md:flex md:space-y-0 md:space-x-4 lg:px-8">
             <div class="flex-1">
                 <div class="flex flex-col items-center mb-2 md:flex-row md:justify-between">
-                    <p class="text-red-600 text-2xl font-semibold">
+                    <p class="text-red-600 text-2xl font-semibold" v-if="$page.props.cartCount <= 0">
                         Your cart is empty!
                     </p>
-                    <p class="text-red-600 text-2xl font-semibold">
-                        5 item(s) in cart
+                    <p class="text-red-600 text-2xl font-semibold" v-else>
+                        {{ $page.props.cartCount }} item(s) in cart
                     </p>
                     <Link :href="route('shop.index')" class="underline hover:text-red-700 transition">Continue Shopping</Link>
                 </div>
@@ -50,7 +50,7 @@
                                 </select>
                             </div>
                             <span class="flex-1 text-right">
-                                $5.99 ea.
+                                {{ $filters.formatCurrency(item.price) }} ea.
                             </span>
                         </div>
                     </div>
@@ -105,7 +105,12 @@
                 </div>
             </div>
             <div class="flex-1">
-                <order-totals></order-totals>
+                <order-totals
+                    :taxRate="cartTaxRate"
+                    :subtotal="cartSubtotal"
+                    :tax="cartTax"
+                    :total="newTotal"
+                ></order-totals>
             </div>
         </div>
     </app-layout>
@@ -117,7 +122,7 @@
     import AppLayout from '@/Layouts/AppLayout'
     import OrderTotals from '@/Components/OrderTotals'
     export default defineComponent({
-        props: ['cartItems'],
+        props: ['cartItems', 'cartTaxRate', 'cartSubtotal', 'cartTax', 'newTotal'],
         components: {
             Link,
             AppLayout,

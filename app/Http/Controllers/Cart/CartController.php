@@ -15,8 +15,18 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $cartItems = Cart::instance('default')->content();
+        $cartTaxRate = config('cart.tax');
+        $tax = config('cart.tax') /100;
+        $cartSubtotal = Cart::instance('default')->subtotal();
+        $cartTax = $cartSubtotal * $tax;
+        $newTotal =Cart::instance('default')->total();
         return Inertia::render('Cart/Index', [
-            'cartItems' => Cart::instance('default')->content(),
+            'cartItems' => $cartItems,
+            'cartTaxRate' => $cartTaxRate,
+            'cartSubtotal' => $cartSubtotal,
+            'cartTax' => $cartTax,
+            'newTotal' => $newTotal,
         ]);
     }
 

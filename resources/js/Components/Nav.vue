@@ -37,7 +37,7 @@
                             </form>
                             <Link href="#" class="hover:text-red-700 transition">
                                 <span class="bg-red-600 text-white text-xs rounded-md p-1 absolute" style="top: -10px; right: -8px;">
-                                    3
+                                    {{ $page.props.cartCount }}
                                 </span>
                                 <icon name="cart" class="w-4 h-4 fill-current"></icon>
                             </Link>
@@ -87,7 +87,7 @@
                 <Link href="#" class="flex items-center pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-red-700 hover:border-red-700 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition">
                     <icon name="cart" class="w-4 h-4 text-red-700 fill-current"></icon>
                     <span class="ml-2">
-                        3 item(s) in cart
+                        {{ $page.props.cartCount }} item(s) in cart
                     </span>
                 </Link>
             </div>
