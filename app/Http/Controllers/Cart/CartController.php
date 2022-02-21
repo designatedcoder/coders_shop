@@ -21,12 +21,16 @@ class CartController extends Controller
         $cartSubtotal = Cart::instance('default')->subtotal();
         $cartTax = $cartSubtotal * $tax;
         $newTotal =Cart::instance('default')->total();
+        $laterItems = Cart::instance('laterCart')->content();
+        $laterCount = Cart::instance('laterCart')->count();
         return Inertia::render('Cart/Index', [
             'cartItems' => $cartItems,
             'cartTaxRate' => $cartTaxRate,
             'cartSubtotal' => $cartSubtotal,
             'cartTax' => $cartTax,
             'newTotal' => $newTotal,
+            'laterItems' => $laterItems,
+            'laterCount' => $laterCount,
         ]);
     }
 
@@ -91,8 +95,8 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        Cart::instance('default')->remove($id);
+        return back();
     }
 }

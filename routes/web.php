@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Cart\LaterController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,10 @@ Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.
  */
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::post('cart/later/{product}', [LaterController::class, 'store'])->name('later.store');
+Route::post('cart/move/{product}', [LaterController::class, 'moveToCart'])->name('later.moveToCart');
+Route::delete('cart/later/{product}', [LaterController::class, 'destroy'])->name('later.destroy');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -11,7 +11,7 @@
                     </p>
                     <Link :href="route('shop.index')" class="underline hover:text-red-700 transition">Continue Shopping</Link>
                 </div>
-                <div class="flex justify-between border-t border-b border-black py-2">
+                <div class="flex justify-between border-t border-b border-black py-2" v-if="$page.props.cartCount > 0">
                     <div class="w-1/3">Item</div>
                     <div class="flex justify-between w-1/2">
                         <span class="flex-1 tex-center">Quantity</span>
@@ -30,12 +30,12 @@
                                     <span>{{ item.options.details }}</span>
                                 </Link>
                                 <div class="flex flex-col mt-4">
-                                    <form>
+                                    <form @submit.prevent="deleteFromCart(item.rowId)">
                                         <button type="submit" class="hover:text-yellow-500">
                                             Remove
                                         </button>
                                     </form>
-                                    <form>
+                                    <form @submit.prevent="addToLaterCart(item.rowId)">
                                         <button type="submit" class="hover:text-yellow-500">
                                             Save for later
                                         </button>
@@ -56,10 +56,10 @@
                     </div>
                 </div>
                 <div class="text-center text-red-600 text-2xl font-semibold mt-4 mb-2 md:text-left">
-                    <p>You have saved no items for later!</p>
-                    <p>5 item(s) saved for later</p>
+                    <p v-if="laterCount <= 0">You have saved no items for later!</p>
+                    <p v-else>{{ laterCount }} item(s) saved for later</p>
                 </div>
-                <div class="flex justify-between border-t border-b border-black py-2">
+                <div class="flex justify-between border-t border-b border-black py-2" v-if="laterCount > 0">
                     <div class="w-1/3">Item</div>
                     <div class="flex justify-between w-1/2">
                         <span class="flex-1 tex-center">Quantity</span>
@@ -67,23 +67,23 @@
                     </div>
                 </div>
                 <div>
-                    <div class="flex justify-between border-b border-black py-2">
+                    <div class="flex justify-between border-b border-black py-2" v-for="(item, index) in laterItems" :key="index">
                         <div class="flex space-x-4 w-1/2">
-                            <Link href="#">
-                                <img :src="'/storage/images/site_images/hand_craft.jpg'" alt="" class="object-cover">
+                            <Link :href="route('shop.show', item.options.slug)">
+                                <img :src="'/storage/images/'+item.options.image" :alt="item.name" class="object-cover">
                             </Link>
                             <div class="flex flex-1 flex-col justify-between">
-                                <Link href="#" class="flex flex-col">
-                                    <span>aoisejfoesj</span>
-                                    <span>aoiejfjsjjjjjjjjjjjjj</span>
+                                <Link :href="route('shop.show', item.options.slug)" class="flex flex-col">
+                                    <span>{{ item.name }}</span>
+                                    <span>{{ item.options.details }}</span>
                                 </Link>
                                 <div class="flex flex-col mt-4">
-                                    <form>
+                                    <form @submit.prevent="deleteFromLater(item.rowId)">
                                         <button type="submit" class="hover:text-yellow-500">
                                             Remove
                                         </button>
                                     </form>
-                                    <form>
+                                    <form @submit.prevent="addToCart(item.rowId)">
                                         <button type="submit" class="hover:text-yellow-500">
                                             Move to Cart
                                         </button>
@@ -98,7 +98,7 @@
                                 </select>
                             </div>
                             <span class="flex-1 text-right">
-                                $5.99 ea.
+                                {{ $filters.formatCurrency(item.price) }} ea.
                             </span>
                         </div>
                     </div>
@@ -122,11 +122,55 @@
     import AppLayout from '@/Layouts/AppLayout'
     import OrderTotals from '@/Components/OrderTotals'
     export default defineComponent({
-        props: ['cartItems', 'cartTaxRate', 'cartSubtotal', 'cartTax', 'newTotal'],
+        props: ['cartItems', 'cartTaxRate', 'cartSubtotal', 'cartTax', 'newTotal', 'laterItems', 'laterCount'],
         components: {
             Link,
             AppLayout,
             OrderTotals,
+        },
+        data() {
+            return {
+                quantity: 1,
+                index: 1,
+                form: this.$inertia.form({
+                    cartItems: this.cartItems,
+                    quantity: 0,
+                })
+            }
+        },
+        methods: {
+            addToLaterCart(id) {
+                this.form.post(this.route('later.store', id), {
+                    preserveScroll: true,
+                    onSuccess:()=> {
+                        console.log(id)
+                    }
+                })
+            },
+            addToCart(id) {
+                this.form.post(this.route('later.moveToCart', id), {
+                    preserveScroll: true,
+                    onSuccess:()=> {
+                        console.log(id)
+                    }
+                })
+            },
+            deleteFromCart(id) {
+                this.form.delete(this.route('cart.destroy', id), {
+                    preserveScroll: true,
+                    onSuccess:()=> {
+                        console.log(id)
+                    }
+                })
+            },
+            deleteFromLater(id) {
+                this.form.delete(this.route('later.destroy', id), {
+                    preserveScroll: true,
+                    onSuccess:()=> {
+                        console.log(id)
+                    }
+                })
+            }
         }
     })
 </script>
