@@ -31,9 +31,11 @@ Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.
  */
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+Route::patch('cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('cart/later/{product}', [LaterController::class, 'store'])->name('later.store');
 Route::post('cart/move/{product}', [LaterController::class, 'moveToCart'])->name('later.moveToCart');
+Route::patch('cart/later/{product}', [LaterController::class, 'update'])->name('later.update');
 Route::delete('cart/later/{product}', [LaterController::class, 'destroy'])->name('later.destroy');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

@@ -69,9 +69,9 @@ class LaterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        Cart::instance('laterCart')->update($id, $request->quantity);
+        return back();
     }
 
     /**
