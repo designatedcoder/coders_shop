@@ -177,11 +177,23 @@
         },
         methods: {
             submit() {
-                this.form.post(this.route('cart.store'), this.form), {
+                this.form.post(this.route('cart.store', this.form), {
                     preserveScroll: true,
-                    onSuccess: () => {}
-                }
+                    onSuccess: () => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: `${this.form.name} has successfully been added to your cart!`
+                        })
+                    }
+                })
             }
         }
     })
 </script>
+
+<style>
+    body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+        top: 60px;
+        right: 60px;
+    }
+</style>

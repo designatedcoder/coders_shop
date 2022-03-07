@@ -14,6 +14,7 @@
 
         <!-- Scripts -->
         @routes
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">

@@ -68,7 +68,10 @@
                 this.form.patch(this.route('cart.update', id), {
                     preserveScroll: true,
                     onSuccess:() => {
-                        console.log(this.form)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Items in cart have successfully been updated!'
+                        })
                     }
                 })
             },
@@ -77,7 +80,10 @@
                 this.form.patch(this.route('later.update', id), {
                     preserveScroll: true,
                     onSuccess:() => {
-                        console.log(this.form)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Saved for later has successfully been updated!'
+                        })
                     }
                 })
             },
@@ -85,7 +91,10 @@
                 this.form.post(this.route('later.store', id), {
                     preserveScroll: true,
                     onSuccess:()=> {
-                        console.log(id)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Item has successfully been saved for later!'
+                        })
                     }
                 })
             },
@@ -93,7 +102,10 @@
                 this.form.post(this.route('later.moveToCart', id), {
                     preserveScroll: true,
                     onSuccess:()=> {
-                        console.log(id)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Item has successfully been added to your cart!'
+                        })
                     }
                 })
             },
@@ -101,7 +113,10 @@
                 this.form.delete(this.route('cart.destroy', id), {
                     preserveScroll: true,
                     onSuccess:()=> {
-                        console.log(id)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Item has succesfully been removed from your cart!'
+                        })
                     }
                 })
             },
@@ -109,10 +124,20 @@
                 this.form.delete(this.route('later.destroy', id), {
                     preserveScroll: true,
                     onSuccess:()=> {
-                        console.log(id)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Item has successfully been removed from your saved for later items!'
+                        })
                     }
                 })
             }
         }
     })
 </script>
+
+<style>
+    body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+        top: 60px;
+        right: 60px;
+    }
+</style>
