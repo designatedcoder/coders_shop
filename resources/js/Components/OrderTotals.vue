@@ -52,17 +52,67 @@
             </div>
         </div>
     </div>
+    <div class="flex flex-col items-center bg-gray-300 shadow-md rounded mt-4 py-6">
+        <span class="text-2xl font-semibold">Promo</span>
+        <form @submit.prevent="addCoupon" class="w-full">
+            <div class="bg-gray-300 px-4">
+                <div>
+                    <div class="bg-white px-4 py-4 mt-2">
+                        <input type="text" class="w-full" placeholder="Enter Promo Code Here" v-model="form.coupon_code">
+                        <span class="text-md text-red-600 mt-2" v-if="$page.props.errors.message">
+                            {{ $page.props.errors.message }}
+                        </span>
+                    </div>
+                    <div class="text-center mt-4">
+                        <gray-button as="button" class="text-sm">
+                            Apply
+                        </gray-button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3';
+    import GrayButton from '@/Components/Buttons/GrayButton'
     import YellowButton from '@/Components/Buttons/YellowButton'
     export default defineComponent({
         props: ['taxRate', 'subtotal', 'tax', 'total'],
         components: {
             Link,
+            GrayButton,
             YellowButton,
         },
+        data() {
+            return {
+                form: this.$inertia.form({
+                    coupon_code: '',
+                })
+            }
+        },
+        methods: {
+            addCoupon() {
+                this.form.post(this.route('coupon.store'), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        this.form.reset()
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Coupon has been added!'
+                        })
+                    }
+                })
+            }
+        }
     })
 </script>
+
+<style>
+    body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+        top: 60px;
+        right: 60px;
+    }
+</style>

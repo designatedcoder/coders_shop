@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Cart\LaterController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,11 @@ Route::post('cart/later/{product}', [LaterController::class, 'store'])->name('la
 Route::post('cart/move/{product}', [LaterController::class, 'moveToCart'])->name('later.moveToCart');
 Route::patch('cart/later/{product}', [LaterController::class, 'update'])->name('later.update');
 Route::delete('cart/later/{product}', [LaterController::class, 'destroy'])->name('later.destroy');
+
+/**
+ *  COUPONS
+ */
+Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
