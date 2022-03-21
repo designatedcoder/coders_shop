@@ -30,8 +30,11 @@
                 <order-totals
                     :taxRate="cartTaxRate"
                     :subtotal="cartSubtotal"
-                    :tax="cartTax"
+                    :tax="newTax"
                     :total="newTotal"
+                    :newSubtotal="newSubtotal"
+                    :code="code"
+                    :discount="discount"
                 ></order-totals>
             </div>
         </div>
@@ -45,7 +48,7 @@
     import CartItems from '@/Components/CartItems'
     import OrderTotals from '@/Components/OrderTotals'
     export default defineComponent({
-        props: ['cartItems', 'cartTaxRate', 'cartSubtotal', 'cartTax', 'newTotal', 'laterItems', 'laterCount'],
+        props: ['cartItems', 'cartTaxRate', 'cartSubtotal', 'newTax', 'newSubtotal', 'newTotal', 'code', 'discount', 'laterItems', 'laterCount'],
         components: {
             Link,
             AppLayout,

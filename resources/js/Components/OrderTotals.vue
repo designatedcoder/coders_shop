@@ -16,22 +16,22 @@
                 <span class="px-4">Order Summary</span>
                 <div class="flex justify-between bg-white px-4 py-2 mt-4">
                     <span>Item(s) subtotal({{ $page.props.cartCount }})</span>
-                    <span>{{ $filters.formatCurrency(subtotal) }}</span>
+                    <span>{{ $filters.formatCurrency(newSubtotal) }}</span>
                 </div>
                 <div class="flex justify-between px-4 mt-4">
                     <span>Shipping</span>
                     <span>Free</span>
                 </div>
-                <div class="flex justify-between px-4 mt-4">
-                    <span>Discount Code (ABC123)</span>
-                    <form>
-                        <span>-$2.00</span>
+                <div class="flex justify-between px-4 mt-4" v-if="code">
+                    <span>Discount Code ({{ code }})</span>
+                    <form @submit.prevent="deleteCoupon">
+                        <span>-{{ $filters.formatCurrency(discount) }}</span>
                         <button type="submit" class="text-red-600 ml-2">X</button>
                     </form>
                 </div>
                 <div class="flex justify-between px-4 mt-4">
                     <span>Estimated Tax</span>
-                    <span>{{ $filters.formatCurrency(tax) }}%</span>
+                    <span>{{ $filters.formatCurrency(tax) }}</span>
                 </div>
                 <div class="bg-white px-4 py-2 mt-4">
                     <div class="flex justify-between">
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col items-center bg-gray-300 shadow-md rounded mt-4 py-6">
+    <div class="flex flex-col items-center bg-gray-300 shadow-md rounded mt-4 py-6" v-if="!code">
         <span class="text-2xl font-semibold">Promo</span>
         <form @submit.prevent="addCoupon" class="w-full">
             <div class="bg-gray-300 px-4">
@@ -80,7 +80,7 @@
     import GrayButton from '@/Components/Buttons/GrayButton'
     import YellowButton from '@/Components/Buttons/YellowButton'
     export default defineComponent({
-        props: ['taxRate', 'subtotal', 'tax', 'total'],
+        props: ['taxRate', 'subtotal', 'tax', 'total', 'newSubtotal', 'code', 'discount'],
         components: {
             Link,
             GrayButton,
@@ -102,6 +102,17 @@
                         Toast.fire({
                             icon: 'success',
                             title: 'Coupon has been added!'
+                        })
+                    }
+                })
+            },
+            deleteCoupon() {
+                this.form.delete(this.route('coupon.destroy'), {
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Coupon has been removed!'
                         })
                     }
                 })

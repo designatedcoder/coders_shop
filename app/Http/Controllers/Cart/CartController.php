@@ -19,15 +19,24 @@ class CartController extends Controller
         $cartTaxRate = config('cart.tax');
         $tax = config('cart.tax') /100;
         $cartSubtotal = Cart::instance('default')->subtotal();
-        $cartTax = $cartSubtotal * $tax;
-        $newTotal =Cart::instance('default')->total();
+        $code =  session()->get('coupon')['name']??null;
+        $discount =  session()->get('coupon')['discount']??0;
+        $newSubtotal = ($cartSubtotal - $discount);
+        if ($newSubtotal < 0) {
+            $newSubtotal = 0;
+        }
+        $newTax = $newSubtotal * $tax;
+        $newTotal = $newSubtotal * (1+$tax);
         $laterItems = Cart::instance('laterCart')->content();
         $laterCount = Cart::instance('laterCart')->count();
         return Inertia::render('Cart/Index', [
             'cartItems' => $cartItems,
             'cartTaxRate' => $cartTaxRate,
             'cartSubtotal' => $cartSubtotal,
-            'cartTax' => $cartTax,
+            'newTax' => $newTax,
+            'code' => $code,
+            'discount' => $discount,
+            'newSubtotal' => $newSubtotal,
             'newTotal' => $newTotal,
             'laterItems' => $laterItems,
             'laterCount' => $laterCount,

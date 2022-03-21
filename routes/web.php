@@ -43,6 +43,7 @@ Route::delete('cart/later/{product}', [LaterController::class, 'destroy'])->name
  *  COUPONS
  */
 Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
+Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

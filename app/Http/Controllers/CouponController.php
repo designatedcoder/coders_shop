@@ -35,13 +35,18 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $code = Coupon::findByCode($request->coupon_code);
-        if (!$code) {
+        $couponCode = Coupon::findByCode($request->coupon_code);
+        if (!$couponCode) {
             return back()->withErrors(['message' => 'We could not find your coupon. Please try again!']);
         }
-        $coupon = $code->couponable();
+        $coupon = $couponCode->couponable;
         $subtotal = Cart::instance('default')->subtotal();
-        dd($subtotal);
+        $discount = $coupon->discount($subtotal);
+        session()->put('coupon', [
+            'name' => $couponCode->code,
+            'discount' => $discount
+        ]);
+        return back();
     }
 
     /**
@@ -84,8 +89,8 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon)
-    {
-        //
+    public function destroy(Coupon $coupon) {
+        session()->forget('coupon');
+        return back();
     }
 }
