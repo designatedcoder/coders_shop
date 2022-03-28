@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cart;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\CartService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -14,32 +15,18 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $cartItems = Cart::instance('default')->content();
-        $cartTaxRate = config('cart.tax');
-        $tax = config('cart.tax') /100;
-        $cartSubtotal = Cart::instance('default')->subtotal();
-        $code =  session()->get('coupon')['name']??null;
-        $discount =  session()->get('coupon')['discount']??0;
-        $newSubtotal = ($cartSubtotal - $discount);
-        if ($newSubtotal < 0) {
-            $newSubtotal = 0;
-        }
-        $newTax = $newSubtotal * $tax;
-        $newTotal = $newSubtotal * (1+$tax);
-        $laterItems = Cart::instance('laterCart')->content();
-        $laterCount = Cart::instance('laterCart')->count();
+    public function index(CartService $cartService) {
         return Inertia::render('Cart/Index', [
-            'cartItems' => $cartItems,
-            'cartTaxRate' => $cartTaxRate,
-            'cartSubtotal' => $cartSubtotal,
-            'newTax' => $newTax,
-            'code' => $code,
-            'discount' => $discount,
-            'newSubtotal' => $newSubtotal,
-            'newTotal' => $newTotal,
-            'laterItems' => $laterItems,
-            'laterCount' => $laterCount,
+            'cartItems' => $cartService->setCartValues()->get('cartItems'),
+            'cartTaxRate' => $cartService->setCartValues()->get('cartTaxRate'),
+            'cartSubtotal' => $cartService->setCartValues()->get('cartSubtotal'),
+            'newTax' => $cartService->setCartValues()->get('newTax'),
+            'code' =>$cartService->setCartValues()->get('code'),
+            'discount' => $cartService->setCartValues()->get('discount'),
+            'newSubtotal' => $cartService->setCartValues()->get('newSubtotal'),
+            'newTotal' => $cartService->setCartValues()->get('newTotal'),
+            'laterItems' =>$cartService->setCartValues()->get('laterItems'),
+            'laterCount' => $cartService->setCartValues()->get('laterCount'),
         ]);
     }
 
