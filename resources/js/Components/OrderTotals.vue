@@ -57,7 +57,7 @@
         <form @submit.prevent="addCoupon" class="w-full">
             <div class="bg-gray-300 px-4">
                 <div>
-                    <div class="bg-white px-4 py-4 mt-2">
+                    <div class="flex flex-col items-center bg-white px-4 py-4 mt-2">
                         <input type="text" class="w-full" placeholder="Enter Promo Code Here" v-model="form.coupon_code">
                         <span class="text-md text-red-600 mt-2" v-if="$page.props.errors.message">
                             {{ $page.props.errors.message }}
