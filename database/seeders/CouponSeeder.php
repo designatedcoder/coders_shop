@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Coupon;
+use App\Models\Coupons\Coupon;
 use Illuminate\Database\Seeder;
-use App\Models\FixedValueCoupon;
-use App\Models\PercentOffCoupon;
+use App\Models\Coupons\FixedValueCoupon;
+use App\Models\Coupons\PercentOffCoupon;
 
 class CouponSeeder extends Seeder
 {

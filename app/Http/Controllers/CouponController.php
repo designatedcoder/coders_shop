@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Coupon;
+use App\Models\Coupons\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 

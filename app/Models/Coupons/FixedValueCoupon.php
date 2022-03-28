@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Coupons;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PercentOffCoupon extends Model
+class FixedValueCoupon extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['percent_off'];
+    protected $fillable = ['value'];
 
     public function discount($order) {
-        return round(($this->percent_off / 100) * $order);
+        return $this->value;
     }
 }
