@@ -8,7 +8,7 @@
                 <span class="text-yellow-500">{{ $filters.formatCurrency(subtotal) }}</span>
             </div>
             <div>
-                <yellow-button href="#" as="href" class="text-sm">Secure Checkout</yellow-button>
+                <yellow-button :href="route('checkout.index')" as="href" class="text-sm">Secure Checkout</yellow-button>
             </div>
         </div>
         <div class="bg-gray-300 px-4 py-6">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <yellow-button href="#" as="href" class="text-sm">Secure Checkout</yellow-button>
+                    <yellow-button :href="route('checkout.index')" as="href" class="text-sm">Secure Checkout</yellow-button>
                 </div>
             </div>
             <div class="text-center mt-4">
