@@ -86,7 +86,7 @@
                                     Credit Card
                                 </label>
                                 <div id="card-element"></div>
-                                <p id="card-error" role="alert"></p>
+                                <p id="card-error" role="alert">{{ cardError }}</p>
                             </div>
                         </div>
                         <div class="flex justify-center">
@@ -116,6 +116,7 @@
 <script>
     import { defineComponent } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3'
+    import { loadStripe } from '@stripe/stripe-js'
     import AppLayout from '@/Layouts/AppLayout'
     import OrderTotals from '@/Components/OrderTotals'
     import YellowButton from '@/Components/Buttons/YellowButton'
@@ -138,7 +139,10 @@
         },
         data() {
             return {
+                cardElement: {},
+                cardError: '',
                 disabled: true,
+                elements: {},
                 errors: [],
                 form: {
                     name: '',
@@ -151,7 +155,58 @@
                 },
                 loading: false,
                 states,
+                stripe: {},
+                style: {
+                    base: {
+                        fontFamily: 'Montserrat, sans-serif',
+                        fontSmoothing: "antialiased",
+                        fontSize: "16px",
+                    },
+                    invalid: {
+                        fontFamily: 'Montserrat, sans-serif',
+                        color: "#ff0000",
+                        iconColor: "#ff0000"
+                    }
+                },
+            }
+        },
+        mounted() {
+            this.initStripe()
+        },
+        methods: {
+            async initStripe() {
+                this.stripe = await loadStripe(process.env.MIX_STRIPE_KEY)
+                this.elements = this.stripe.elements()
+                this.cardElement = this.elements.create("card", {
+                    style: this.style,
+                    hidePostalCode: true,
+                })
+                this.cardElement.mount("#card-element")
+                this.cardElement.addEventListener('change', (event) => {
+                    this.disabled = false
+                    this.cardError = event.error ? event.error.message : ""
+                })
             }
         }
     })
 </script>
+
+<style scoped>
+    #card-error {
+        color: #ff0000;
+        text-align: center;
+        font-size: 16px;
+        line-height: 17px;
+        margin-top: 12px;
+    }
+    #card-element {
+        border-radius: 0.25rem;
+        padding: 12px;
+        --tw-border-opacity: 1;
+        border: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+        height: 44px;
+        width: 100%;
+        --tw-bg-opacity: 1;
+        background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+    }
+</style>
