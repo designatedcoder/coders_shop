@@ -182,10 +182,57 @@
                     hidePostalCode: true,
                 })
                 this.cardElement.mount("#card-element")
-                this.cardElement.addEventListener('change', (event) => {
+                this.cardElement.on('change', (event) => {
                     this.disabled = false
                     this.cardError = event.error ? event.error.message : ""
                 })
+            },
+            async processPayment() {
+                this.loading = true
+                this.disabled = true
+                const { paymentMethod, error } = await this.stripe.createPaymentMethod({
+                    type: 'card',
+                    card: this.cardElement,
+                    billing_details: {
+                        name: this.form.name,
+                        email: this.form.email,
+                        address: {
+                            line1: this.form.address,
+                            city: this.form.city,
+                            state: this.form.state,
+                            postal_code: this.form.zip_code
+                        }
+                    }
+                })
+                if(error) {
+                    this.loading = true
+                    if (error.param === 'billing_details[name]') {
+                        this.cardError = 'The name is required!'
+                    } else if (error.param === 'billing_details[email]') {
+                        this.cardError = 'The email is required!'
+                    }
+                } else {
+                    this.loading = false
+                    this.form.payment_method_id = paymentMethod.id
+                    this.form.amount = this.newTotal
+                    this.checkout()
+                }
+            },
+            checkout() {
+                axios.post('/checkout', this.form)
+                    .then((resp) => {
+                        console.log(resp)
+                    })
+                    .catch((err) => {
+                        if (err.response.status === 422) {
+                            this.errors = err.response.data.errors
+                        } else {
+                            this.errors = []
+                            err.response.status === 500 ?
+                            this.cardError = err.response.data.errors :
+                            err.response.data.message
+                        }
+                    })
             }
         }
     })

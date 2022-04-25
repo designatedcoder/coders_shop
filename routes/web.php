@@ -50,7 +50,7 @@ Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.des
  *  CHECKOUT
  */
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
