@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e57e8793f4384ed84b522ca3a9e85a64",
+    "content-hash": "79fcc7665fffb851b1445f7412c9b6b1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -178,16 +178,16 @@
         },
         {
             "name": "bumbummen99/shoppingcart",
-            "version": "dev-master",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/designatedcoder/LaravelShoppingcart.git",
-                "reference": "77739c026430e92ead13d9c9221f7e24d10c5bf8"
+                "url": "https://github.com/bumbummen99/LaravelShoppingcart.git",
+                "reference": "71dfa94ba8b509e4e3d541963ea53b1129d373a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/designatedcoder/LaravelShoppingcart/zipball/77739c026430e92ead13d9c9221f7e24d10c5bf8",
-                "reference": "77739c026430e92ead13d9c9221f7e24d10c5bf8",
+                "url": "https://api.github.com/repos/bumbummen99/LaravelShoppingcart/zipball/71dfa94ba8b509e4e3d541963ea53b1129d373a1",
+                "reference": "71dfa94ba8b509e4e3d541963ea53b1129d373a1",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +204,6 @@
             "suggest": {
                 "gloudemans/notify": "Simple flash notifications for Laravel"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -221,11 +220,7 @@
                     "Gloudemans\\Shoppingcart\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Gloudemans\\Tests\\Shoppingcart\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -247,9 +242,10 @@
                 "shoppingcart"
             ],
             "support": {
-                "source": "https://github.com/designatedcoder/LaravelShoppingcart/tree/master"
+                "issues": "https://github.com/bumbummen99/LaravelShoppingcart/issues",
+                "source": "https://github.com/bumbummen99/LaravelShoppingcart/tree/4.1.1"
             },
-            "time": "2022-03-31T21:49:25+00:00"
+            "time": "2022-04-27T14:48:35+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -9144,9 +9140,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "bumbummen99/shoppingcart": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
