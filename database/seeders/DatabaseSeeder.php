@@ -12,11 +12,11 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run() {
-        $this->call([
-            CouponSeeder::class,
-            CategorySeeder::class,
-            ProductSeeder::class,
-        ]);
-        // \App\Models\User::factory(10)->create();
+        // $this->call([
+        //     CouponSeeder::class,
+        //     CategorySeeder::class,
+        //     ProductSeeder::class,
+        // ]);
+        \App\Models\User::factory(10)->hasBillingDetail()->create();
     }
 }
