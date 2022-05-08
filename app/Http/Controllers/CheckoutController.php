@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\PaymentGatewayContract;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\CartService;
 use Stripe\Exception\CardException;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CheckoutController extends Controller
 {
@@ -47,13 +47,8 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $cartItems = Cart::instance('default')->content()->map(function ($item) {
-            return
-                'Product Code: '.$item->options->product_code.', '.
-                'Product Name: '. $item->model->name.', '.
-                'Product Qty: '.$item->qty;
-        })->values()->toJson();
+    public function store(PaymentGatewayContract $paymentService, Request $request) {
+
         try {
             $this->validate($request, [
                 'email' => ['required', 'min:8', 'max:100', 'email', 'unique:users'],
@@ -68,17 +63,9 @@ class CheckoutController extends Controller
 
             $confirmation_number = Str::uuid();
             $user = new User;
-            $payment = $user->charge(ceil($request->amount), $request->payment_method_id, [
-                'receipt_email' => $request->email,
-                'statement_descriptor' => 'Coders Shop',
-                'description' => 'You bought my swag!',
-                'metadata' => [
-                    'Confirmation # ' => $confirmation_number,
-                    'Item(s)' => $cartItems,
-                    'Total Item(s) Count' => Cart::instance('default')->count(),
-                ],
-            ]);
-            $payment = $payment->asStripePaymentIntent();
+
+            $paymentService->charge($user, $request, $confirmation_number);
+
             return response([
                 'success' => true,
             ], 200);
