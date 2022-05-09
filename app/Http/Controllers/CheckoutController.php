@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\PaymentGatewayContract;
+use App\Http\Requests\CheckoutFormRequest;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -44,25 +45,13 @@ class CheckoutController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CheckoutFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PaymentGatewayContract $paymentService, Request $request) {
-
+    public function store(PaymentGatewayContract $paymentService, CheckoutFormRequest $request) {
         try {
-            $this->validate($request, [
-                'email' => ['required', 'min:8', 'max:100', 'email', 'unique:users'],
-                'name' => ['required', 'string', 'min:3', 'max:100'],
-                'name_on_card' => ['required', 'string', 'min:3', 'max:100'],
-                'password' => ['sometimes', 'required', 'min:8', 'max:20'],
-                'address' => ['required', 'string', 'min:3', 'max:50'],
-                'city' => ['required', 'string', 'min:2', 'max:20'],
-                'state' => ['required', 'string', 'min:2', 'max:20'],
-                'zip_code' => ['required', 'string', 'min:5', 'max:15'],
-            ]);
-
             $confirmation_number = Str::uuid();
-            $user = new User;
+            $user = auth()->user() ?? new User;
 
             $paymentService->charge($user, $request, $confirmation_number);
 

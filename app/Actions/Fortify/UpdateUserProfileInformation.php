@@ -19,8 +19,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'string', 'min:3', 'max:100'],
+            'email' => ['required', 'email', 'min:3', 'max:100', Rule::unique('users')->ignore($user->id)],
+            'address' =>  ['required', 'string', 'min:3', 'max:50'],
+            'city' =>  ['required', 'string', 'min:2', 'max:20'],
+            'state' =>  ['required', 'string', 'min:2', 'max:20'],
+            'zip_code' =>  ['required', 'string', 'min:5', 'max:15'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -35,6 +39,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+            ])->save();
+            $user->billingDetails->forceFill([
+                'address' => $input['address'],
+                'city' => $input['city'],
+                'state' => $input['state'],
+                'zip_code' => $input['zip_code'],
             ])->save();
         }
     }
@@ -52,6 +62,12 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+        ])->save();
+        $user->billingDetails->forceFill([
+            'address' => $input['address'],
+            'city' => $input['city'],
+            'state' => $input['state'],
+            'zip_code' => $input['zip_code'],
         ])->save();
 
         $user->sendEmailVerificationNotification();
