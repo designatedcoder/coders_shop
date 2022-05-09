@@ -67,7 +67,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function billingDetail(): HasOne {
+    public function billingDetails(): HasOne {
         return $this->hasOne(BillingDetail::class);
     }
 }
