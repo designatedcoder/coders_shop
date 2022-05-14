@@ -29,4 +29,13 @@ class Product extends Model
     public function categories(): BelongsToMany {
         return $this->belongsToMany(Category::class);
     }
+
+    /**
+     * The orders that belong to the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function orders(): BelongsToMany {
+        return $this->belongsToMany(Order::class);
+    }
 }

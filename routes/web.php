@@ -4,6 +4,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Cart\LaterController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,13 @@ Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.des
  */
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+/**
+ *  AUTH USERS
+ */
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
