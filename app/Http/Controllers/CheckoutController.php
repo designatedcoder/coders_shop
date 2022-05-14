@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\PaymentGatewayContract;
-use App\Http\Requests\CheckoutFormRequest;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\CartService;
 use Stripe\Exception\CardException;
+use App\Contracts\PaymentGatewayContract;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Http\Requests\CheckoutFormRequest;
+use App\Models\Product;
+use App\Services\OrderService;
 
 class CheckoutController extends Controller
 {
@@ -48,15 +51,31 @@ class CheckoutController extends Controller
      * @param  \App\Http\Requests\CheckoutFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PaymentGatewayContract $paymentService, CheckoutFormRequest $request) {
+    public function store(PaymentGatewayContract $paymentService, OrderService $orderService, CheckoutFormRequest $request) {
         try {
             $confirmation_number = Str::uuid();
             $user = auth()->user() ?? new User;
 
             $paymentService->charge($user, $request, $confirmation_number);
 
+            $order = $user->orders()->create($orderService->all($request, $confirmation_number));
+
+            foreach(Cart::instance('default')->content() as $item) {
+                $product = Product::find($item->model->id);
+                $order->products()->attach($product, ['quantity' => $item->qty]);
+            }
+
             return response([
                 'success' => true,
+                'order' => [
+                    'confirmation_number' => $order->confirmation_number,
+                    'billing_subtotal' => $order->billing_subtotal,
+                    'billing_tax' => $order->billing_tax,
+                    'billing_discount_code' => $order->billing_discount_code,
+                    'billing_discount' => $order->billing_discount,
+                    'billing_total' => $order->billing_total,
+                    'items' => $order->products,
+                ],
             ], 200);
         }catch (CardException $e) {
             return response([

@@ -154,6 +154,7 @@
                     name_on_card: '',
                 },
                 loading: false,
+                order: {},
                 states,
                 stripe: {},
                 style: {
@@ -221,7 +222,7 @@
             checkout() {
                 axios.post('/checkout', this.form)
                     .then((resp) => {
-                        console.log(resp)
+                        console.log(resp.data.order)
                     })
                     .catch((err) => {
                         if (err.response.status === 422) {
