@@ -22,6 +22,9 @@ class CheckoutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(CartService $cartService) {
+        if (Cart::instance('default')->count() == 0) {
+            return redirect()->route('shop.index');
+        }
         $contents = [
             'cartItems' => $cartService->setCartValues()->get('cartItems'),
             'cartTaxRate' => $cartService->setCartValues()->get('cartTaxRate'),
@@ -32,6 +35,9 @@ class CheckoutController extends Controller
             'newSubtotal' => $cartService->setCartValues()->get('newSubtotal'),
             'newTotal' => $cartService->setCartValues()->get('newTotal'),
         ];
+        if (!auth()->check()) {
+            return Inertia::render('Checkout/Guest', $contents);
+        }
         return Inertia::render('Checkout/Index', $contents);
     }
 

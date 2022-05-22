@@ -50,13 +50,14 @@ Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.des
 /**
  *  CHECKOUT
  */
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::get('/guest/checkout', [CheckoutController::class, 'index'])->name('guest.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
 /**
  *  AUTH USERS
  */
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
 });
 

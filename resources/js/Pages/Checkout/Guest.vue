@@ -69,7 +69,7 @@
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                                         E-mail
                                     </label>
-                                    <input type="email" class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-400 rounded py-2 px-4" id="email" required v-model="form.email" :class="{ 'opacity-50 cursor-not-allowed' : disabled }" disabled>
+                                    <input type="email" class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-400 rounded py-2 px-4" id="email" required v-model="form.email">
                                     <span class="flex justify-center text-md text-red-600 mt-2" v-if="errors.email">
                                         {{ errors.email[0] }}
                                     </span>
@@ -152,12 +152,12 @@
                 elements: {},
                 errors: [],
                 form: {
-                    name: this.$page.props.user.name,
-                    email: this.$page.props.user.email,
-                    address: this.$page.props.user.billing_details.address,
-                    city: this.$page.props.user.billing_details.city,
-                    state: this.$page.props.user.billing_details.state,
-                    zip_code: this.$page.props.user.billing_details.zip_code,
+                    name: '',
+                    email: '',
+                    address: '',
+                    city: '',
+                    state: '',
+                    zip_code: '',
                     name_on_card: '',
                 },
                 isConfirmed: false,
