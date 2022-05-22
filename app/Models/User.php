@@ -64,6 +64,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['billingDetails'];
+
+    /**
      * Get the user associated with the BillingDetail
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
