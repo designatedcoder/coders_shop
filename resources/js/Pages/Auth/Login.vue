@@ -49,7 +49,7 @@
                             <Link :href="route('register')" class="underline text-gray-600 hover:text-gray-900 transition">
                                 Need a new account?
                             </Link>
-                            <Link href="#" class="underline text-gray-600 hover:text-gray-900 transition">
+                            <Link :href="route('guest.index')" class="underline text-gray-600 hover:text-gray-900 transition">
                                 Checkout as a guest
                             </Link>
                             <Link :href="route('shop.index')" class="underline text-gray-600 hover:text-gray-900 transition">Continue Shopping.</Link>

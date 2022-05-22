@@ -71,7 +71,7 @@
                             <Link :href="route('login')" class="underline text-gray-600 hover:text-gray-900 transition">
                                 Already registered?
                             </Link>
-                            <Link href="#" class="underline text-gray-600 hover:text-gray-900 transition">
+                            <Link :href="route('guest.index')" class="underline text-gray-600 hover:text-gray-900 transition">
                                 Checkout as a guest
                             </Link>
                             <Link :href="route('shop.index')" class="underline text-gray-600 hover:text-gray-900 transition">Continue Shopping.</Link>
