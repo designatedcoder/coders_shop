@@ -54,6 +54,37 @@
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
                 <jet-input-error :message="form.errors.email" class="mt-2" />
             </div>
+
+            <!-- Address -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="address" value="Address" />
+                <jet-input id="address" type="text" class="mt-1 block w-full" v-model="form.address" />
+                <jet-input-error :message="form.errors.address" class="mt-2" />
+            </div>
+
+            <!-- City -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="city" value="City" />
+                <jet-input id="city" type="text" class="mt-1 block w-full" v-model="form.city" />
+                <jet-input-error :message="form.errors.city" class="mt-2" />
+            </div>
+
+            <!-- State  -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="state" value="State" />
+                    <select class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 w-full" :value="form.state" id="state" required v-model="form.state">
+                        <option disabled value="">Please select one</option>
+                        <option v-for="(state, index) in states" :key="index" :selected="state === form.state">{{ state }}</option>
+                    </select>
+                <jet-input-error :message="form.errors.state" class="mt-2" />
+            </div>
+
+            <!-- Zip Code -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="zip_code" value="Zip Code" />
+                <jet-input id="zip_code" type="text" class="mt-1 block w-full" v-model="form.zip_code" />
+                <jet-input-error :message="form.errors.zip_code" class="mt-2" />
+            </div>
         </template>
 
         <template #actions>
@@ -77,6 +108,7 @@
     import JetLabel from '@/Jetstream/Label.vue'
     import JetActionMessage from '@/Jetstream/ActionMessage.vue'
     import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
+    import states from '@/states'
 
     export default defineComponent({
         components: {
@@ -97,8 +129,13 @@
                     _method: 'PUT',
                     name: this.user.name,
                     email: this.user.email,
+                    address: this.user.billing_details.address,
+                    city: this.user.billing_details.city,
+                    state: this.user.billing_details.state,
+                    zip_code: this.user.billing_details.zip_code,
                     photo: null,
                 }),
+                states: states,
 
                 photoPreview: null,
             }
