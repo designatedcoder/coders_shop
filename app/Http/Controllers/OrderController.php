@@ -14,7 +14,9 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Inertia::render('Orders/Index');
+        return Inertia::render('Orders/Index', [
+            'orders' => auth()->user()->orders()->with('products')->latest()->paginate(2)
+        ]);
     }
 
     /**
