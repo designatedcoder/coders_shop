@@ -30,6 +30,15 @@ class Order extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:F j, Y',
+    ];
+
+    /**
      * Get the user that owns the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
