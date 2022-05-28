@@ -1,40 +1,36 @@
 <template>
     <app-layout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
-            </h2>
-        </template>
+        <main-layout>
+            <div>
+                <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                    <div v-if="$page.props.jetstream.canUpdateProfileInformation">
+                        <update-profile-information-form :user="$page.props.user" />
 
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <update-profile-information-form :user="$page.props.user" />
+                        <jet-section-border />
+                    </div>
 
-                    <jet-section-border />
+                    <div v-if="$page.props.jetstream.canUpdatePassword">
+                        <update-password-form class="mt-10 sm:mt-0" />
+
+                        <jet-section-border />
+                    </div>
+
+                    <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
+                        <two-factor-authentication-form class="mt-10 sm:mt-0" />
+
+                        <jet-section-border />
+                    </div>
+
+                    <logout-other-browser-sessions-form :sessions="sessions" class="mt-10 sm:mt-0" />
+
+                    <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
+                        <jet-section-border />
+
+                        <delete-user-form class="mt-10 sm:mt-0" />
+                    </template>
                 </div>
-
-                <div v-if="$page.props.jetstream.canUpdatePassword">
-                    <update-password-form class="mt-10 sm:mt-0" />
-
-                    <jet-section-border />
-                </div>
-
-                <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-                    <two-factor-authentication-form class="mt-10 sm:mt-0" />
-
-                    <jet-section-border />
-                </div>
-
-                <logout-other-browser-sessions-form :sessions="sessions" class="mt-10 sm:mt-0" />
-
-                <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-                    <jet-section-border />
-
-                    <delete-user-form class="mt-10 sm:mt-0" />
-                </template>
             </div>
-        </div>
+        </main-layout>
     </app-layout>
 </template>
 
@@ -44,6 +40,7 @@
     import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue'
     import JetSectionBorder from '@/Jetstream/SectionBorder.vue'
     import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue'
+    import MainLayout from '@/Layouts/MainLayout.vue'
     import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue'
     import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue'
     import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue'
@@ -56,6 +53,7 @@
             DeleteUserForm,
             JetSectionBorder,
             LogoutOtherBrowserSessionsForm,
+            MainLayout,
             TwoFactorAuthenticationForm,
             UpdatePasswordForm,
             UpdateProfileInformationForm,
