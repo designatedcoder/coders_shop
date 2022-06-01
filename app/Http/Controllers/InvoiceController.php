@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class OrderController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,7 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return Inertia::render('Orders/Index', [
-            'orders' => auth()->user()->orders()->with('products')->latest()->paginate(2)
-        ]);
+        //
     }
 
     /**
@@ -35,9 +34,9 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $url = route('invoice.show', ['order' => $request->order]);
+        return Inertia::location($url);
     }
 
     /**
@@ -46,10 +45,8 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order) {
-        return Inertia::render('Orders/Show', [
-            'order' => $order->load('products'),
-        ]);
+    public function show(Order $order, InvoiceService $invoiceService) {
+        return $invoiceService->createInvoice($order)->stream();
     }
 
     /**
