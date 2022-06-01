@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79fcc7665fffb851b1445f7412c9b6b1",
+    "content-hash": "0127f378654cd28aa95ac2fc9d753e99",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -115,6 +115,82 @@
                 "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.7"
             },
             "time": "2022-03-14T02:02:36+00:00"
+        },
+        {
+            "name": "barryvdh/laravel-dompdf",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-dompdf.git",
+                "reference": "de83130d029289e1b59f28b41c314ce1d157b4a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-dompdf/zipball/de83130d029289e1b59f28b41c314ce1d157b4a0",
+                "reference": "de83130d029289e1b59f28b41c314ce1d157b4a0",
+                "shasum": ""
+            },
+            "require": {
+                "dompdf/dompdf": "^1.2.1",
+                "illuminate/support": "^6|^7|^8|^9",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "nunomaduro/larastan": "^1|^2",
+                "orchestra/testbench": "^4|^5|^6|^7",
+                "phpro/grumphp": "^1",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\DomPDF\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Barryvdh\\DomPDF\\Facade\\Pdf"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Barryvdh\\DomPDF\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "A DOMPDF Wrapper for Laravel",
+            "keywords": [
+                "dompdf",
+                "laravel",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-dompdf/issues",
+                "source": "https://github.com/barryvdh/laravel-dompdf/tree/v1.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-05-19T15:08:38+00:00"
         },
         {
             "name": "brick/math",
@@ -2050,6 +2126,72 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.7.2"
             },
             "time": "2022-03-23T12:38:24+00:00"
+        },
+        {
+            "name": "laraveldaily/laravel-invoices",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelDaily/laravel-invoices.git",
+                "reference": "bb444db546ddf9b768a06a58320d96e6f7541b7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelDaily/laravel-invoices/zipball/bb444db546ddf9b768a06a58320d96e6f7541b7b",
+                "reference": "bb444db546ddf9b768a06a58320d96e6f7541b7b",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-dompdf": "^1",
+                "illuminate/http": "^5.5|^6|^7|^8|^9",
+                "illuminate/support": "^5.5|^6|^7|^8|^9",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3",
+                "symfony/var-dumper": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelDaily\\Invoices\\InvoiceServiceProvider"
+                    ],
+                    "aliases": {
+                        "Invoice": "LaravelDaily\\Invoices\\Facades\\Invoice"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelDaily\\Invoices\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "David Lun",
+                    "email": "mysticcode@gmail.com",
+                    "homepage": "https://lun.lt",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Missing invoices for Laravel",
+            "homepage": "https://github.com/LaravelDaily/laravel-invoices",
+            "keywords": [
+                "invoice",
+                "invoices",
+                "laravel",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/LaravelDaily/laravel-invoices/issues",
+                "source": "https://github.com/LaravelDaily/laravel-invoices/tree/3.0.0"
+            },
+            "time": "2022-02-10T11:01:16+00:00"
         },
         {
             "name": "league/commonmark",
