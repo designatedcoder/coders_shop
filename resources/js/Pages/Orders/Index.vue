@@ -16,7 +16,7 @@
                         <div class="flex flex-col text-right">
                             <span>Order # {{ order.confirmation_number }}</span>
                             <div>
-                                <yellow-button as="href" href="#" class="py-1">
+                                <yellow-button as="href" :href="route('orders.show', order.confirmation_number)" class="py-1">
                                     <span>View Invoice</span>
                                 </yellow-button>
                             </div>
