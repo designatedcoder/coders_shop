@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\CartService;
+use App\Services\OrderService;
 use Stripe\Exception\CardException;
 use App\Contracts\PaymentGatewayContract;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Requests\CheckoutFormRequest;
-use App\Models\Product;
-use App\Services\OrderService;
+use App\Mail\OrderReceived;
+use App\Services\InvoiceService;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -57,7 +60,7 @@ class CheckoutController extends Controller
      * @param  \App\Http\Requests\CheckoutFormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PaymentGatewayContract $paymentService, OrderService $orderService, CheckoutFormRequest $request) {
+    public function store(PaymentGatewayContract $paymentService, OrderService $orderService, CheckoutFormRequest $request, InvoiceService $invoiceService) {
         try {
             $confirmation_number = Str::uuid();
             $user = auth()->user() ?? new User;
@@ -70,6 +73,10 @@ class CheckoutController extends Controller
                 $product = Product::find($item->model->id);
                 $order->products()->attach($product, ['quantity' => $item->qty]);
             }
+
+            $userInvoice = auth()->user() ?? $order->billing_email;
+
+            Mail::to($userInvoice)->send(new OrderReceived($order->load('products'), $invoiceService->createInvoice($order)));
 
             return response([
                 'success' => true,

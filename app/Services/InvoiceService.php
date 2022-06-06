@@ -17,7 +17,7 @@ class InvoiceService {
             'name'          => $order->billing_name,
             'address'       => $order->billing_address.' | '.$order->billing_city.', '.$order->billing_state.' '.$order->billing_zip_code,
             'custom_fields' => [
-                'email' => $order->user->email,
+                'email' => $order->billing_email,
             ],
         ]);
 
