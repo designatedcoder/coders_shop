@@ -4,12 +4,12 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Cart\LaterController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,49 +22,32 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/', WelcomeController::class)->name('welcome');
 
-/**
- *  SHOP
- */
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.show');
+/**  SHOP */
+Route::resource('shop', ShopController::class)->parameter('shop', 'product:slug')->only(['index', 'show']);
 
-/**
- *  CART
- */
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('cart', [CartController::class, 'store'])->name('cart.store');
-Route::patch('cart/{product}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::post('cart/later/{product}', [LaterController::class, 'store'])->name('later.store');
-Route::post('cart/move/{product}', [LaterController::class, 'moveToCart'])->name('later.moveToCart');
-Route::patch('cart/later/{product}', [LaterController::class, 'update'])->name('later.update');
-Route::delete('cart/later/{product}', [LaterController::class, 'destroy'])->name('later.destroy');
+/** CART */
+Route::resource('cart', CartController::class)->parameter('cart', 'product')->except(['edit', 'create']);
+Route::prefix('cart/later')->name('later.')->group(function() {
+    Route::post('/later/{product}', [LaterController::class, 'store'])->name('store');
+    Route::patch('/later/{product}', [LaterController::class, 'update'])->name('update');
+    Route::delete('/later/{product}', [LaterController::class, 'destroy'])->name('destroy');
+    Route::post('/move/{product}', [LaterController::class, 'moveToCart'])->name('moveToCart');
+});
 
-/**
- *  COUPONS
- */
-Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
-Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
+/** COUPONS  */
+Route::resource('coupon', CouponController::class)->parameter('coupon', '')->only(['store', 'destroy']);
 
-/**
- *  CHECKOUT
- */
+/** CHECKOUT */
 Route::get('/guest/checkout', [CheckoutController::class, 'index'])->name('guest.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-/**
- *  AUTH USERS
- */
+/**  AUTH USERS */
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/my-orders/invoice/{order:confirmation_number}', [OrderController::class, 'show'])->name('orders.show');
-    Route::get('/invoice/{order:confirmation_number}', [InvoiceController::class, 'show'])->name('invoice.show');
-    Route::post('/invoice/{order:confirmation_number}', [InvoiceController::class, 'store'])->name('invoice.store');
+    Route::resource('invoice', InvoiceController::class)->parameter('invoice', 'order:confirmation_number')->only(['show', 'store']);
 });
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');

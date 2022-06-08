@@ -19,24 +19,28 @@ use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
+    public function __construct(CartService $cartService) {
+        $this->cartService = $cartService;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CartService $cartService) {
+    public function index() {
         if (Cart::instance('default')->count() == 0) {
             return redirect()->route('shop.index');
         }
         $contents = [
-            'cartItems' => $cartService->setCartValues()->get('cartItems'),
-            'cartTaxRate' => $cartService->setCartValues()->get('cartTaxRate'),
-            'cartSubtotal' => $cartService->setCartValues()->get('cartSubtotal'),
-            'newTax' => $cartService->setCartValues()->get('newTax'),
-            'code' =>$cartService->setCartValues()->get('code'),
-            'discount' => $cartService->setCartValues()->get('discount'),
-            'newSubtotal' => $cartService->setCartValues()->get('newSubtotal'),
-            'newTotal' => $cartService->setCartValues()->get('newTotal'),
+            'cartItems' => $this->cartService->setCartValues()->get('cartItems'),
+            'cartTaxRate' => $this->cartService->setCartValues()->get('cartTaxRate'),
+            'cartSubtotal' => $this->cartService->setCartValues()->get('cartSubtotal'),
+            'newTax' => $this->cartService->setCartValues()->get('newTax'),
+            'code' =>$this->cartService->setCartValues()->get('code'),
+            'discount' => $this->cartService->setCartValues()->get('discount'),
+            'newSubtotal' => $this->cartService->setCartValues()->get('newSubtotal'),
+            'newTotal' => $this->cartService->setCartValues()->get('newTotal'),
         ];
         if (!auth()->check()) {
             return Inertia::render('Checkout/Guest', $contents);
@@ -71,7 +75,24 @@ class CheckoutController extends Controller
 
             foreach(Cart::instance('default')->content() as $item) {
                 $product = Product::find($item->model->id);
+                if ($product->quantity < $item->qty) {
+                    if ($product->quantity === 0) {
+                        return response([
+                            'errors' => 'Sorry! '.$item->name. ' is no longer available. Please remove the item from your cart.'
+                        ], 400);
+                    }
+                    return response([
+                        'errors' => 'Sorry! There are only '.$product->quantity. 'of '.$item->name. ' left. Please adjust the quantities in your cart!',
+                    ], 400);
+                }
                 $order->products()->attach($product, ['quantity' => $item->qty]);
+                $product->decrement('quantity', $item->qty);
+            }
+
+            Cart::instance('default')->destroy();
+
+            if (session()->has('coupon')) {
+                session()->forget('coupon');
             }
 
             $userInvoice = auth()->user() ?? $order->billing_email;
