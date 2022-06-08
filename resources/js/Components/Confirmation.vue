@@ -79,12 +79,3 @@
         }
     })
 </script>
-
-<style>
-    @media print {
-        button#hamburger, button#print { display: none; }
-        #confirmation { padding: 20px 30px; }
-    }
-
-    @page { size: auto; margin: 0mm; }
-</style>

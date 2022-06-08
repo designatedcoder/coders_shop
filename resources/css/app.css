@@ -3,3 +3,33 @@
 @import 'tailwindcss/utilities';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+    top: 60px !important;
+    right: 60px !important;
+}
+
+#card-error {
+    color: #ff0000;
+    text-align: center;
+    font-size: 16px;
+    line-height: 17px;
+    margin-top: 12px;
+}
+#card-element {
+    border-radius: 0.25rem;
+    padding: 12px;
+    --tw-border-opacity: 1;
+    border: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
+    height: 44px;
+    width: 100%;
+    --tw-bg-opacity: 1;
+    background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+
+@media print {
+    button#hamburger, button#print { display: none; }
+    #confirmation { padding: 20px 30px; }
+}
+
+@page { size: auto; margin: 0mm; }

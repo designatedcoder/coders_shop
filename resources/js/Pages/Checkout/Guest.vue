@@ -247,23 +247,3 @@
         }
     })
 </script>
-
-<style scoped>
-    #card-error {
-        color: #ff0000;
-        text-align: center;
-        font-size: 16px;
-        line-height: 17px;
-        margin-top: 12px;
-    }
-    #card-element {
-        border-radius: 0.25rem;
-        padding: 12px;
-        --tw-border-opacity: 1;
-        border: 1px solid rgba(156, 163, 175, var(--tw-border-opacity));
-        height: 44px;
-        width: 100%;
-        --tw-bg-opacity: 1;
-        background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
-    }
-</style>
