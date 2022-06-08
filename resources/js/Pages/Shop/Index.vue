@@ -30,10 +30,10 @@
                     <Link :href="route('shop.index', { category: categorySlug, sort: 'high_low'})" class="hover:text-yellow-500">High to Low</Link>
                 </div>
                 <div class="container flex flex-wrap mx-auto">
-                    <div class="flex justify-center my-4 w-full" v-if="products.length === 0">
-                        <img :src="'/storage/images/site_images/droids.jpeg'" alt="These are not the droids you are looking for!">
-                    </div>
-                    <Link :href="route('shop.show', product.slug)" class="flex flex-col w-full p-4 rounded sm:w-1/2 md:w-1/3" v-for="(product, index) in products" :key="index"  v-else>
+                    <template v-if="products.length === 0">
+                        <no-items-found></no-items-found>
+                    </template>
+                    <Link :href="route('shop.show', product.slug)" class="flex flex-col w-full p-4 rounded sm:w-1/2 md:w-1/3" v-for="(product, index) in products" :key="index" v-else>
                         <img :src="'/storage/images/'+product.image" :alt="product.name" class="h-72 object-cover md:w-72 lg:w-96">
                         <div class="flex justify-around bg-gray-700 py-2">
                             <span class="text-yellow-500">{{ $filters.formatCurrency(product.price) }}</span>
@@ -50,12 +50,14 @@
     import { defineComponent } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3'
     import AppLayout from '@/Layouts/AppLayout'
+    import NoItemsFound from '@/Components/NoItemsFound'
     import SecondaryHeader from '@/Components/SecondaryHeader'
     export default defineComponent({
         props: ['products', 'categories', 'categoryName', 'categorySlug'],
         components: {
             Link,
             AppLayout,
+            NoItemsFound,
             SecondaryHeader,
         }
     })
