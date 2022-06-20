@@ -27,6 +27,8 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
-        "@stripe/stripe-js": "^1.27.0"
+        "@stripe/stripe-js": "^1.27.0",
+        "algoliasearch": "^4.13.1",
+        "vue-instantsearch": "^4.3.3"
     }
 }

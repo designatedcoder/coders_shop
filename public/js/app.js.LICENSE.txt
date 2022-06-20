@@ -1,6 +1,8 @@
 /* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
  * @license MIT */
 
+/*! algoliasearch-lite.umd.js | 4.13.1 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */
+
 /**
  * @license
  * Lodash <https://lodash.com/>

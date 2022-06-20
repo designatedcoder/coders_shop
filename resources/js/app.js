@@ -5,6 +5,8 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import Icons from './Components/Icons'
 
+import InstantSearch from 'vue-instantsearch/vue3/es'
+
 window.Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -35,6 +37,7 @@ createInertiaApp({
         }
         VueApp
             .use(plugin)
+            .use(InstantSearch)
             .mixin({ methods: { route } })
             .component('icon', Icons)
             .mount(el);
