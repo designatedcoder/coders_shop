@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
@@ -20,6 +21,21 @@ class Product extends Model
         'price',
         'quantity',
     ];
+
+        /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray() {
+        $array = $this->toArray();
+
+        $array2 = [
+            'categories' => $this->categories->pluck('name')->toArray(),
+        ];
+
+        return array_merge($array, $array2);
+    }
 
     /**
      * The categories that belong to the Product

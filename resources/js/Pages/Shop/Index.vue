@@ -6,7 +6,7 @@
                 <span>Shop {{ categoryName }}</span>
             </template>
             <template #search>
-                search
+                <auto-complete></auto-complete>
             </template>
         </secondary-header>
         <div class="flex">
@@ -50,6 +50,7 @@
     import { defineComponent } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3'
     import AppLayout from '@/Layouts/AppLayout'
+    import AutoComplete from '@/Components/Search/AutoComplete'
     import NoItemsFound from '@/Components/NoItemsFound'
     import SecondaryHeader from '@/Components/SecondaryHeader'
     export default defineComponent({
@@ -57,6 +58,7 @@
         components: {
             Link,
             AppLayout,
+            AutoComplete,
             NoItemsFound,
             SecondaryHeader,
         }

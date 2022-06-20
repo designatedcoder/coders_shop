@@ -8,7 +8,7 @@
                 <span>{{ product.name }}</span>
             </template>
             <template #search>
-                search
+                <auto-complete></auto-complete>
             </template>
         </secondary-header>
         <div class="max-w-7xl mx-auto px-4 py-4 sm:flex sm:space-x-4 sm:px-6 lg:px-8">
@@ -149,6 +149,7 @@
     import { defineComponent } from 'vue'
     import { Link } from '@inertiajs/inertia-vue3'
     import AppLayout from '@/Layouts/AppLayout'
+    import AutoComplete from '@/Components/Search/AutoComplete'
     import GrayButton from '@/Components/Buttons/GrayButton'
     import SecondaryHeader from '@/Components/SecondaryHeader'
     export default defineComponent({
@@ -156,6 +157,7 @@
         components: {
             Link,
             AppLayout,
+            AutoComplete,
             GrayButton,
             SecondaryHeader,
         },
