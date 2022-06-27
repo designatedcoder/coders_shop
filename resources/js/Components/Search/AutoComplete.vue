@@ -72,6 +72,11 @@
                     process.env.MIX_ALGOLIA_SEARCH,
                 )
             }
+        },
+        methods: {
+            search() {
+                this.$inertia.get(this.route('searchAlgolia.index'))
+            }
         }
     })
 </script>
