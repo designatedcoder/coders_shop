@@ -9,7 +9,7 @@
         "algolia/scout-extended": "^2.0",
         "bumbummen99/shoppingcart": "4.1.1",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.4.4",
+        "guzzlehttp/guzzle": "^7.4.5",
         "inertiajs/inertia-laravel": "^0.5.4",
         "laravel/cashier": "^13.8",
         "laravel/framework": "^9.0",
