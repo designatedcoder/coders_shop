@@ -159,4 +159,15 @@ return [
     | configuration, just use the command `scout:sync` to get remote settings in this file.
     |
     */
+    'ranking' => [
+        'asc(price)',
+        'typo',
+        'geo',
+        'words',
+        'filters',
+        'proximity',
+        'attribute',
+        'exact',
+        'custom',
+    ],
 ];
