@@ -16,7 +16,7 @@
                 <div id="img-container" class="border-2 mx-auto p-2 cursor-zoom-in overflow-hidden">
                     <img :src="'/storage/'+currentImg" id="current-img" :alt="product.name" class="w-full h-full object-cover origin-center">
                 </div>
-                <div class="mt-6">
+                <div class="mt-6" v-if="product.alt_images">
                     <Carousel :settings="settings" :breakpoints="breakpoints">
                         <Slide v-for="(image, index) in slides" :key="index" class="cursor-pointer border-2 border-black hover:border-blue-600" :class="{ selected: index === isActive, 'border-red-600': index === isActive }" @click.prevent="changeCurrentImage(image, index)">
                             <div class="carousel__item">

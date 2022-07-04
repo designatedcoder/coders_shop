@@ -35,7 +35,7 @@
                                     <Link :href="route('shop.show', hit.slug)" class="flex items-center space-x-4 px-2 py-2 transition hover:bg-gray-700 focus:outline-none focus:bg-gray-700 " v-for="(hit, index) in item.hits" :key="index">
                                         <div class="flex w-24 h-24">
                                             <img
-                                                :src="'/storage/images/'+hit.image"
+                                                :src="'/storage/'+hit.main_image"
                                                 :alt="hit.name"
                                                 class="object-cover"
                                             />

@@ -36,7 +36,7 @@ class LaterController extends Controller
     public function store($id) {
         $item = Cart::instance('default')->get($id);
         Cart::instance('default')->remove($id);
-        Cart::instance('laterCart')->add($item->id, $item->name, $item->qty, $item->price, 0, ['totalQty' => $item->options->totalQty, 'product_code' => $item->options->product_code, 'image' => $item->options->image, 'slug' => $item->options->slug, 'details' => $item->options->details])->associate('App\Models\Product');
+        Cart::instance('laterCart')->add($item->id, $item->name, $item->qty, $item->price, 0, ['totalQty' => $item->options->totalQty, 'product_code' => $item->options->product_code, 'main_image' => $item->options->main_image, 'slug' => $item->options->slug, 'details' => $item->options->details])->associate('App\Models\Product');
         return back();
     }
 
@@ -93,7 +93,7 @@ class LaterController extends Controller
     public function moveToCart($id) {
         $item = Cart::instance('laterCart')->get($id);
         Cart::instance('laterCart')->remove($id);
-        Cart::instance('default')->add($item->id, $item->name, $item->qty, $item->price, 0, ['totalQty' => $item->options->totalQty, 'product_code' => $item->options->product_code, 'image' => $item->options->image, 'slug' => $item->options->slug, 'details' => $item->options->details])->associate('App\Models\Product');
+        Cart::instance('default')->add($item->id, $item->name, $item->qty, $item->price, 0, ['totalQty' => $item->options->totalQty, 'product_code' => $item->options->product_code, 'main_image' => $item->options->main_image, 'slug' => $item->options->slug, 'details' => $item->options->details])->associate('App\Models\Product');
         return back();
     }
 }

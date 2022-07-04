@@ -28,7 +28,7 @@
                     <template v-slot:item="{ item }">
                         <Link :href="route('shop.show', item.slug)" class="flex space-x-8">
                             <div class="flex w-24 h-24">
-                                <img :src="'/storage/images/'+item.image" :alt="item.name" class="object-cover">
+                                <img :src="'/storage/'+item.main_image" :alt="item.name" class="object-cover">
                             </div>
                             <div class="flex flex-col">
                                 <h3 class="text-xl font-semibold">

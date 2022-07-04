@@ -20,7 +20,7 @@
                         <div v-for="(product, index) in order.products" :key="index">
                             <Link :href="route('shop.show', product.slug)" class="flex justify-between space-x-4 divide-x py-6">
                                 <div class="flex-1">
-                                    <img :src="'/storage/images/'+product.image" :alt="product.name" class="object-cover">
+                                    <img :src="'/storage/'+product.main_image" :alt="product.name" class="object-cover">
                                 </div>
                                 <div class="flex-1 pl-4">
                                     <span>{{ product.name }}</span>
