@@ -29,6 +29,7 @@
     "dependencies": {
         "@stripe/stripe-js": "^1.27.0",
         "algoliasearch": "^4.13.1",
-        "vue-instantsearch": "^4.3.3"
+        "vue-instantsearch": "^4.3.3",
+        "vue3-carousel": "^0.1.40"
     }
 }
