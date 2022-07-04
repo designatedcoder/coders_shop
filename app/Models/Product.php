@@ -17,9 +17,19 @@ class Product extends Model
         'details',
         'description',
         'product_code',
-        'image',
+        'main_image',
+        'alt_images',
         'price',
         'quantity',
+    ];
+
+    /**
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
+    protected $casts = [
+        'alt_images' => 'array',
     ];
 
         /**

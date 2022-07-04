@@ -21,7 +21,7 @@
                         {{ feat.name }}
                     </span>
                 </div>
-                <img :src="'/storage/images/'+feat.image" :alt="feat.name" class="h-72 object-cover md:w-72 lg:w-96">
+                <img :src="'/storage/'+feat.main_image" :alt="feat.name" class="h-72 object-cover md:w-72 lg:w-96">
             </Link>
         </div>
         <div class="text-center text-white bg-black px-4 py-4">

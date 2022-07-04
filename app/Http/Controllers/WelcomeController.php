@@ -15,7 +15,7 @@ class WelcomeController extends Controller
      */
     public function __invoke() {
         $categories = Category::take(4)->inRandomOrder()->get(['name', 'slug']);
-        $featured = Product::where('image', '!=', 'defaults/no_image.jpg')->take(4)->inRandomOrder()->get(['name', 'slug', 'image']);
+        $featured = Product::where('main_image', '!=', 'defaults/no_image.jpg')->take(4)->inRandomOrder()->get(['name', 'slug', 'main_image']);
         return Inertia::render('Welcome', [
             'categories' => $categories,
             'featured' => $featured,
