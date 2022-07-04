@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import 'vue3-carousel/dist/carousel.css';
 
 body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
     top: 60px !important;
@@ -16,6 +17,7 @@ body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .s
     line-height: 17px;
     margin-top: 12px;
 }
+
 #card-element {
     border-radius: 0.25rem;
     padding: 12px;
@@ -26,6 +28,10 @@ body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .s
     --tw-bg-opacity: 1;
     background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
 }
+
+.carousel__prev--in-active,
+.carousel__next--in-active { display: none; }
+.carousel__slide {  margin: 0 4px; }
 
 @media print {
     button#hamburger, button#print { display: none; }
