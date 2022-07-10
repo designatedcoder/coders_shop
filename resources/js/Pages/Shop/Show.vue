@@ -12,21 +12,24 @@
             </template>
         </secondary-header>
         <div class="max-w-7xl mx-auto px-4 py-4 sm:flex sm:space-x-4 sm:px-6 lg:px-8">
-            <div class="flex-1 sm:border-r">
-                <div id="img-container" class="border-2 mx-auto p-2 cursor-zoom-in overflow-hidden">
-                    <img :src="'/storage/'+currentImg" id="current-img" :alt="product.name" class="w-full h-full object-cover origin-center">
+            <div class="flex flex-col flex-1 sm:border-r">
+                <div class="border-2 overflow-hidden cursor-zoom-in h-full">
+                    <div id="img-container" class="w-full h-full">
+                        <img id="current-img" :src="'/storage/'+currentImg" :alt="product.name" class="w-full h-full object-cover origin-center">
+                    </div>
                 </div>
-                <div class="mt-6" v-if="product.alt_images">
+                <div class="mt-6">
                     <Carousel :settings="settings" :breakpoints="breakpoints">
                         <Slide v-for="(image, index) in slides" :key="index" class="cursor-pointer border-2 border-black hover:border-blue-600" :class="{ selected: index === isActive, 'border-red-600': index === isActive }" @click.prevent="changeCurrentImage(image, index)">
-                            <div class="carousel__item">
-                                <img :src="'/storage/'+image" class="w-full h-full object-cover" :class="{'opacity-50': index !== isActive }">
+                            <div class="carousel__item flex w-full h-full">
+                                <img :src="'/storage/'+image" class="object-cover" :class="{ 'opacity-50': index !== isActive  }">
                             </div>
                         </Slide>
                         <template #addons>
                             <Navigation />
                         </template>
                     </Carousel>
+                    <!-- "\/images\/products\/January_2022\/alts\/kids-12.png" -->
                 </div>
             </div>
             <div class="flex-1 space-y-6 my-4 sm:mt-0 sm:border-l sm:pl-4">
