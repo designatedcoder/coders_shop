@@ -17,7 +17,7 @@
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laraveldaily/laravel-invoices": "^3.0",
+        "laraveldaily/laravel-invoices": "^3.0.2",
         "livewire/livewire": "^2.10",
         "tightenco/ziggy": "^1.0"
     },
